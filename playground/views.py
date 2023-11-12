@@ -1,10 +1,13 @@
 from django.shortcuts import render
 from django.core.exceptions import ObjectDoesNotExist
-from django.db.models import Q, F
-from store.models import OrderItem, Product, Order
+from django.db.models import Q, F, Value, Func, Count, Max, Min, Avg, Sum, ExpressionWrapper, DecimalField
+from django.db.models.functions import Concat
+from django.db import transaction, connection
+from django.contrib.contenttypes.models import ContentType
+from store.models import OrderItem, Product, Order, Customer, Collection
+from tags.models import TaggedItem
 
 def say_hello(request):
-    # quearyset = Product.objects.prefetch_related('promotions').select_related('collection').all()
-    quearyset = Order.objects.select_related('customer').prefetch_related('orderitem_set__product').order_by('-placed_at')[:5]
-        
-    return render(request, 'hello.html', {'name': 'Julian', 'orders': list(quearyset)})
+    
+    
+    return render(request, 'hello.html', {'name': 'Julian'})
